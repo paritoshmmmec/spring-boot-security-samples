@@ -5,6 +5,7 @@ import dev.paritosh.hellosecurity.handlers.CustomAuthenticationFailureHandler;
 import dev.paritosh.hellosecurity.handlers.CustomAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +20,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+@Profile({"default", "RoleBasedInMemoryAuth"})
+public class InMemoryUserNameAndPasswordRoleBasedSecurityConfig {
 
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String USER_ROLE = "USER";
@@ -41,7 +43,8 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf()
+                .disable()
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/access-denied").permitAll()
                 .antMatchers("/admin").hasAnyRole(ADMIN_ROLE)
