@@ -16,8 +16,18 @@ public class HomeController {
         return "hello";
     }
 
+    @GetMapping("/admin/setting")
+    public String setting(){
+        return "setting";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "accessDenied";
     }
 }
